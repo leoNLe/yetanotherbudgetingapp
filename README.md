@@ -11,37 +11,34 @@ Application was built using Node.js, Express.js, Mongoose, and React.
 * [Questions](#questions)
 
 ## Installation
+```
+Scripts
 
-	```
-	Scripts
-
-	npm i
+npm i
 	
-	npm start 
+npm start 
 
-	``` 
-	```	
-	Deploy environmental variables:
+Deploy environmental variables:
 	
-	SMTP_HOST: SMTP host.  Provided by the email provider
-	SMTP_IS_SECURE: True/False
-	SMTP_USER: Email used to send confirmation email
-	SMT_PASS: Password to SMTP_USER email
-	SMTP_PORT: Specify port use for SMTP
+SMTP_HOST: SMTP host.  Provided by the email provider
+SMTP_IS_SECURE: True/False
+SMTP_USER: Email used to send confirmation email
+SMT_PASS: Password to SMTP_USER email
+SMTP_PORT: Specify port use for SMTP
 
-	```
-	```
+```
 
-	For information on API routes please refer to [API Routes](./README-api.md).
 
-	```
+For information on API routes please refer to [API Routes](README-api.md) 
+
+
 ## Usage
 	
 	Creating an account and verifying email address.
 	
 	Enter expense and income.
 
-	Create budget by create Category and Categroy group with a allotment of budget amount to a category.
+	Create budget by create Category and Category group with a allotment of budget amount to a category.
 
 ## Questions 
 If you have any questions about the repo, open the issue or contact [LeoNLe](https://github.com/leoNle) directly at lnle125@gmail.com
