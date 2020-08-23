@@ -121,6 +121,7 @@ function Budget() {
               catUUID={category.categoryUUID}
               categoryName={category.categoryName}
               subCategory={category.subCategory}
+              perspective={category.perspective}
             />
           );
         })}

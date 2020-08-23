@@ -22,7 +22,12 @@ function Category(props) {
   console.log("subCategory", props.subCategory);
   const subcategories = props.subCategory.map(
     ({ subCategoryName, budgeted, activity, subCategoryUUID }) => {
-      const available = budgeted - activity;
+      let available = 0;
+      if (props.perspective === "Inflow") {
+        available = budgeted - activity;
+      } else {
+        available = budgeted + activity;
+      }
       tempbudgeted += budgeted;
       tempActivity += activity;
       return (
