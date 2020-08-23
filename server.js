@@ -25,6 +25,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const exphbs = require("express-handlebars");
 require("dotenv").config();
+const path = require("path");
 
 const Constants = require("./constants");
 const routes = require("./routes");
@@ -41,13 +42,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "./client/build")));
 }
 
 // Add routes, both API and view
 app.use(routes);
 
-const Utils = require ("./utils");
+const Utils = require("./utils");
 Utils.startAndInitializeDatabase();
 // Utilities.startAndInitializeDatabase();
 
