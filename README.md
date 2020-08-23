@@ -6,9 +6,9 @@ Application was built using Node.js, Express.js, Mongoose, and React.
 [Y.A.B.A](https://yaba-1.herokuapp.com/)
 
 ## Table of Contents
-	* [Installation](#installation) 
-	* [Usage](#usage)
-	* [Questions](#questions)
+* [Installation](#installation) 
+* [Usage](#usage)
+* [Questions](#questions)
 
 ## Installation
 
