@@ -24,9 +24,9 @@ function Category(props) {
     ({ subCategoryName, budgeted, activity, subCategoryUUID }) => {
       let available = 0;
       if (props.perspective === "Inflow") {
-        available = budgeted - activity;
-      } else {
         available = budgeted + activity;
+      } else {
+        available = budgeted - activity;
       }
       tempbudgeted += budgeted;
       tempActivity += activity;

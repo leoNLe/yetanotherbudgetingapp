@@ -3,6 +3,7 @@ import { Table, Card } from "reactstrap";
 import { getTransAPI } from "../../utils/TransactionAPI";
 import { useAppContext } from "../../utils/globalStates/stateProvider";
 import { ADD_TRANSACTION } from "../../utils/globalStates/actions";
+import "./index.css";
 export default function TransactionList(props) {
   const [transactions, setTransactions] = useState([]);
   const accountUUID = "63a9b997-d793-429e-bb93-eb57ae5ade9c";
@@ -31,27 +32,27 @@ export default function TransactionList(props) {
     return transactions?.map(
       ({ payee, categoryName, subCategoryName, amount }) => {
         return (
-          <tr>
-            <td>{Intl.DateTimeFormat("en-US").format(props.date)}</td>
-            <td>{payee}</td>
-            <td>{categoryName}</td>
-            <td>{subCategoryName}</td>
-            <td> ${amount}</td>
-          </tr>
+          <div className="transaction-item shadow">
+            <div>{Intl.DateTimeFormat("en-US").format(props.date)}</div>
+            <div>{payee}</div>
+            <div>{`${categoryName}: ${subCategoryName}`}</div>
+            <div> ${amount}</div>
+          </div>
         );
       }
     );
   };
   return (
-    <Container-fluid>
-      <Card style={{ marginTop: "1rem" }}>
-        <Table bordered>
-          <thead>
-            <tr>{renderHeader()}</tr>
-          </thead>
-          <tbody>{renderBody()}</tbody>
-        </Table>
-      </Card>
-    </Container-fluid>
+    <div style={{ marginTop: "1rem" }}>
+      <div className="border shadow">
+        <div className="transaction-container">
+          <div className="column-name "> Date </div>
+          <div className="column-name"> Payee</div>
+          <div className="column-name"> Category </div>
+          <div className="column-name"> Amount </div>
+        </div>
+      </div>
+      {renderBody()}
+    </div>
   );
 }

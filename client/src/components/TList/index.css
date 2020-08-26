@@ -1,0 +1,33 @@
+.border {
+	background-color: black;
+}
+.transaction-container{
+	display: grid;
+	grid-template-columns: minmax(25px, 100px) 2fr 2fr 1.5fr;
+	grid-gap: 1px;
+} 
+
+.transaction-container > div {
+	background:white;
+	padding: 5px;
+}
+
+.column-name {
+	padding: .2rem;
+	justify-self: stretch;
+	text-align: center;
+}
+
+.transaction-item {
+	background-color: white;
+	padding: .25rem 0;
+	margin: .25rem 0;
+	display: grid;
+	grid-template-columns: minmax(25px, 100px) 2fr 2fr 1.5fr;
+	justify-items: center;
+	overflow: hidden;
+	border-radius: 8px;
+}
+.transaction-item > div {
+	overflow: hidden;
+}

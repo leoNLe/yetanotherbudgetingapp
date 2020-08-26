@@ -110,7 +110,7 @@ function Budget() {
       <div className="top-container">
         <div className="name-item "> Category Name </div>
         <div className="column-name"> Budgeted </div>
-        <div className="column-name"> Spent </div>
+        <div className="column-name"> Activity </div>
         <div className="column-name"> Available </div>
       </div>
       <CategoriesContext.Provider value={{ addSubCategory, updateBudgeted }}>
