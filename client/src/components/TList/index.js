@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Table, Card } from "reactstrap";
+import TempAdd from "../TempAdd/";
+import { Table, Card, Button } from "reactstrap";
 import { getTransAPI } from "../../utils/TransactionAPI";
 import { useAppContext } from "../../utils/globalStates/stateProvider";
 import { ADD_TRANSACTION } from "../../utils/globalStates/actions";
+import { parseDate } from "../../utils/dateformat";
+
 import "./index.css";
 export default function TransactionList(props) {
   const [transactions, setTransactions] = useState([]);
   const accountUUID = "63a9b997-d793-429e-bb93-eb57ae5ade9c";
   const [{ user }, dispatch] = useAppContext();
+  const [showAdd, setShowAdd] = useState(false);
+  const [newList, setNewList] = useState(false);
 
   useEffect(() => {
     getTransAPI(user.sessionUUID, accountUUID)
@@ -19,21 +24,14 @@ export default function TransactionList(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, [dispatch, props.change, user.sessionUUID]);
-  const renderHeader = () => {
-    let headerElement = ["date", "payee", "category", "subcategory", "amount"];
-
-    return headerElement.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>;
-    });
-  };
+  }, [dispatch, newList, user.sessionUUID]);
 
   const renderBody = () => {
     return transactions?.map(
-      ({ payee, categoryName, subCategoryName, amount }) => {
+      ({ date, payee, categoryName, subCategoryName, amount }) => {
         return (
-          <div className="transaction-item shadow">
-            <div>{Intl.DateTimeFormat("en-US").format(props.date)}</div>
+          <div className="transaction-item transaction-grid shadow">
+            <div>{parseDate(`${date}`)}</div>
             <div>{payee}</div>
             <div>{`${categoryName}: ${subCategoryName}`}</div>
             <div> ${amount}</div>
@@ -44,14 +42,25 @@ export default function TransactionList(props) {
   };
   return (
     <div style={{ marginTop: "1rem" }}>
-      <div className="border shadow">
-        <div className="transaction-container">
+      <div className="add-btn-div">
+        <Button className="add-btn width" onClick={() => setShowAdd(!showAdd)}>
+          Add
+        </Button>
+      </div>
+      <div className=" border shadow">
+        <div className="transaction-container transaction-grid">
           <div className="column-name "> Date </div>
           <div className="column-name"> Payee</div>
           <div className="column-name"> Category </div>
           <div className="column-name"> Amount </div>
         </div>
       </div>
+      {showAdd ? (
+        <TempAdd
+          setShowAdd={() => setShowAdd(!showAdd)}
+          setNewList={() => setNewList(!newList)}
+        />
+      ) : null}
       {renderBody()}
     </div>
   );

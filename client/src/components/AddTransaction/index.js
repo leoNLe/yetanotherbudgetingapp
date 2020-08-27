@@ -45,7 +45,6 @@ export const AddTransaction = (props) => {
       setCategories(tempCat);
     });
   }, [user.sessionUUID, yearMonth]);
-  console.log(categories);
 
   const onSubmit = (e) => {
     e.preventDefault();

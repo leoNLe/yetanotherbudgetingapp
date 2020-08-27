@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ArrowRight from "../../icons/ArrowRight";
 import ArrowLeft from "../../icons/ArrowLeft";
 import { useParams } from "react-router";
+import { yearMonthToString } from "../../utils/dateformat";
 
 function MonthSelector(props) {
   const [year, setYear] = useState(parseInt(props.yearMonth.substring(0, 4)));
@@ -20,7 +21,7 @@ function MonthSelector(props) {
     setMonth(newMonth);
   };
   useEffect(() => {
-    const yearMonth = toString(year, month);
+    const yearMonth = yearMonthToString(year, month);
     if (yearMonth !== props.yearMonth) {
       props.setYearMonth(yearMonth);
     }

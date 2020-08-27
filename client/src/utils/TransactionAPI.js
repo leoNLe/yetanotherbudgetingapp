@@ -4,7 +4,7 @@ export const getTransAPI = (sessionUUID, accountUUID) => {
   return axios.post("/api/transaction/list", {
     sessionUUID,
     accountUUID,
-    filter: []
+    filter: [],
   });
 };
 
@@ -14,7 +14,8 @@ export const createTransAPI = (
   payee,
   categoryUUID,
   subCategoryUUID,
-  amount
+  amount,
+  date
 ) => {
   return axios.post("/api/transaction/create", {
     sessionUUID,
@@ -22,14 +23,15 @@ export const createTransAPI = (
     payee,
     categoryUUID,
     subCategoryUUID,
-    amount
+    amount,
+    date,
   });
 };
 
 export const delTransAPI = (sessionUUID, transactionUUID) => {
   return axios.delete("/api/transaction/delete", {
     sessionUUID,
-    transactionUUID
+    transactionUUID,
   });
 };
 
@@ -37,6 +39,6 @@ export const getBalance = (sessionUUID, accountUUID, balance) => {
   return axios.get("/api/budgetAccount/list", {
     sessionUUID,
     accountUUID,
-    balance
+    balance,
   });
 };

@@ -64,7 +64,7 @@ function button(
 const notLoggedIn = {
   login: {
     id: 2,
-    pages: { "/register": true, "/": true },
+    pages: { "/register": true },
     path: "/login",
     color: "info",
     display: "Log In",
