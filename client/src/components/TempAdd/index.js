@@ -103,7 +103,15 @@ function TempAdd(props) {
         />
       </div>
       <div className="add-transaction-div ">
-        <Button className="add-btn"> Add Transaction </Button>
+        <Button
+          className="bg-danger cancel-btn"
+          onClick={() => props.setShowAdd()}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" className="add-btn">
+          Add Transaction
+        </Button>
       </div>
     </Form>
   );

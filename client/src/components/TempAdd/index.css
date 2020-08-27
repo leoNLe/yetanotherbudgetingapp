@@ -9,6 +9,9 @@
 	display:grid;
 	
 }
+.cancel-btn {
+	margin-right: 1rem;
+}
 
 .add-transaction-div {
 	display: flex;
