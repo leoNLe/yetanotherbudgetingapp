@@ -50,7 +50,7 @@ function TempAdd(props) {
     if (payee === "" || mainCatID === "" || subCatID === "" || amount === 0) {
       return;
     }
-    console.log(date);
+    const formatedDate = `${date}`.replaceAll("-", "");
     createTransAPI(
       user.sessionUUID,
       accountUUID,
@@ -58,7 +58,7 @@ function TempAdd(props) {
       mainCatID,
       subCatID,
       amount,
-      date.replaceAll("-", ""),
+      formatedDate,
       []
     ).then((response) => {
       props.setNewList();
