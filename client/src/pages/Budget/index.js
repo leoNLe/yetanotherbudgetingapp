@@ -68,8 +68,6 @@ function Budget() {
       yearMonth,
       budgeted
     ).then(({ data }) => {
-      console.log("retruned from sertITem", data);
-      console.log("current categories", categories);
       getList();
     });
   };

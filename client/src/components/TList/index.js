@@ -17,7 +17,6 @@ export default function TransactionList(props) {
   useEffect(() => {
     getTransAPI(user.sessionUUID, accountUUID)
       .then((response) => {
-        console.log(response);
         setTransactions(response.data.transaction);
         dispatch({ type: ADD_TRANSACTION, payload: response.data.transaction });
       })

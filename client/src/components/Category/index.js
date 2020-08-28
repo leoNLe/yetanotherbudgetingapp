@@ -19,7 +19,6 @@ function Category(props) {
   let tempbudgeted = 0;
   let tempActivity = 0;
 
-  console.log("subCategory", props.subCategory);
   const subcategories = props.subCategory.map(
     ({ subCategoryName, budgeted, activity, subCategoryUUID }) => {
       let available = 0;
