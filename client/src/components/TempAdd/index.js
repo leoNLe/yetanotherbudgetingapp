@@ -8,15 +8,20 @@ import { yearMonthToString } from "../../utils/dateformat";
 import "./index.css";
 function TempAdd(props) {
   const [{ user }] = useAppContext();
-  const [date, setDate] = useState(new Date());
+
   const [payee, setPayee] = useState("");
   const [amount, setAmount] = useState(0);
   const [categories, setCategories] = useState([]);
   const [subCatID, setSubCatID] = useState("");
   const [mainCatID, setMainCatID] = useState("");
+
   const dateObj = new Date();
+  const [date, setDate] = useState(
+    `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
+  );
+
   const [yearMonth] = useState(
-    yearMonthToString(dateObj.getFullYear(), dateObj.getMonth())
+    yearMonthToString(dateObj.getFullYear(), dateObj.getMonth() + 1)
   );
   const accountUUID = "63a9b997-d793-429e-bb93-eb57ae5ade9c";
 
@@ -45,6 +50,7 @@ function TempAdd(props) {
     if (payee === "" || mainCatID === "" || subCatID === "" || amount === 0) {
       return;
     }
+    console.log(date);
     createTransAPI(
       user.sessionUUID,
       accountUUID,
