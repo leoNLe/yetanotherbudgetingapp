@@ -19,7 +19,7 @@ function TempAdd(props) {
   const [date, setDate] = useState(
     `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
   );
-
+  console.log(date);
   const [yearMonth] = useState(
     yearMonthToString(dateObj.getFullYear(), dateObj.getMonth() + 1)
   );
@@ -50,8 +50,6 @@ function TempAdd(props) {
     if (payee === "" || mainCatID === "" || subCatID === "" || amount === 0) {
       return;
     }
-
-    const formatedDate = date.toString().replaceAll("-", "");
     createTransAPI(
       user.sessionUUID,
       accountUUID,
@@ -59,7 +57,7 @@ function TempAdd(props) {
       mainCatID,
       subCatID,
       amount,
-      formatedDate,
+      date.replace(/-/g, ""),
       []
     ).then((response) => {
       props.setNewList();

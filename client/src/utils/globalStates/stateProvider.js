@@ -17,7 +17,6 @@ const reducer = (state, action) => {
   switch (action.type) {
     case ADD_USER_INFO:
       sessionStorage.setItem("user", JSON.stringify(action.payload));
-      console.log(action.payload);
       return { ...state, user: action.payload, loading: false };
 
     case SET_LOADING:
@@ -35,7 +34,6 @@ const reducer = (state, action) => {
       return { ...state };
 
     case ADD_TRANSACTION:
-      console.log("action payload", action.payload);
       return {
         ...state,
         transactions: [...action.payload],

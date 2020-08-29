@@ -31,9 +31,6 @@ function AddCategoryModal(props) {
     setNewName("");
     props.toggle();
   };
-  useEffect(() => {
-    console.log(perspective);
-  }, [perspective]);
   return (
     <Modal isOpen={props.showModal}>
       <ModalHeader>Add {props.label}</ModalHeader>
