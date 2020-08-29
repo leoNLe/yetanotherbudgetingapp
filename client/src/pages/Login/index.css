@@ -1,12 +1,25 @@
 .login-form {
-    width:100%;
-    padding: 15px;
-    margin: auto;
-    height: 100%
-  }
+   height: 100%;
+		max-width: 100% !important ;
+}
 
-  .btn-color {
-    background-color: #0c879c;
-  }
-   
-  
+.btn-color {
+  background-color: #0c879c;
+}
+
+.user-div {
+	margin: 0 5%;
+}
+.login-body {
+	max-width: 100% !important;
+} 
+
+@media only screen and (min-width: 900px){
+.user-div{
+	width: 60% !important;
+	margin: auto;
+	align: center;
+}
+.login-form {
+	max-width: 60% !important;
+}}

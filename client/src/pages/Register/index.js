@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 import { register } from "../../utils/API";
-import Modal from '../../components/AlertModal';
+import Modal from "../../components/AlertModal";
 
 function Register() {
   const [input, setInput] = useState({
@@ -23,7 +23,7 @@ function Register() {
     password: "",
   });
 
-  const [message,setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [modalShow, setModalShow] = useState(false);
 
   const validateInput = () => {
@@ -34,12 +34,14 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInput()) {
-      register(input).then(({data})=> {
+      register(input).then(({ data }) => {
         console.log(data);
-        setMessage(`Success! Welcome to Y.A.B.A ${data.firstName}! \nCheck your email to verify your account!`)
+        setMessage(
+          `Success! Welcome to Y.A.B.A ${data.firstName}! \nCheck your email to verify your account!`
+        );
         setModalShow(true);
-        setTimeout(()=> setModalShow(false), 5000)
-      })
+        setTimeout(() => setModalShow(false), 5000);
+      });
     } else {
       alert("invalid input!");
     }
@@ -50,52 +52,56 @@ function Register() {
 
   return (
     <>
-    <Modal show={modalShow} title="Registration Successful!" body={message} />
-    <Card
-      color=""
-      body={true}
-      style={{ width: "60%", margin: "auto", align: "center"}}
-    >
-      <CardBody>
-        <Form className="login-form" onSubmit={handleSubmit}>
-          <CardTitle className="text-center">
-            <h1>Y.A.B.A</h1>
-          </CardTitle>
-          <CardSubtitle className="text-center">Welcome!</CardSubtitle>
-          <FormGroup>
-            <Label>First Name</Label>
-            <Input
-            onChange={handleInputChange}
-              name="firstName"
-              type="text"
-              placeholder="First Name"
-            ></Input>
-          </FormGroup>
-          <FormGroup>
-            <Label>Last Name</Label>
-            <Input
-            onChange={handleInputChange}
-            name="lastName" type="text" placeholder="Last Name"></Input>
-          </FormGroup>
-          <FormGroup>
-            <Label>Email</Label>
-            <Input
-            onChange={handleInputChange}
-            name="email" type="email" placeholder="Email"></Input>
-          </FormGroup>
-          <FormGroup>
-            <Label>Password</Label>
-            <Input
-            onChange={handleInputChange}
-              name="password"
-              type="password"
-              placeholder="Password"
-            ></Input>
-          </FormGroup>
-          <Button className="btn-color btn-lg btn-dark btn-block">Sign Up</Button>
-        </Form>
-      </CardBody>
-    </Card>
+      <Modal show={modalShow} title="Registration Successful!" body={message} />
+      <Card color="" body={true} className="user-div">
+        <CardBody>
+          <Form className="login-form" onSubmit={handleSubmit}>
+            <CardTitle className="text-center">
+              <h1>Y.A.B.A</h1>
+            </CardTitle>
+            <CardSubtitle className="text-center">Welcome!</CardSubtitle>
+            <FormGroup>
+              <Label>First Name</Label>
+              <Input
+                onChange={handleInputChange}
+                name="firstName"
+                type="text"
+                placeholder="First Name"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Last Name</Label>
+              <Input
+                onChange={handleInputChange}
+                name="lastName"
+                type="text"
+                placeholder="Last Name"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Email</Label>
+              <Input
+                onChange={handleInputChange}
+                name="email"
+                type="email"
+                placeholder="Email"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Password</Label>
+              <Input
+                onChange={handleInputChange}
+                name="password"
+                type="password"
+                placeholder="Password"
+              ></Input>
+            </FormGroup>
+            <Button className="btn-color btn-lg btn-dark btn-block">
+              Sign Up
+            </Button>
+          </Form>
+        </CardBody>
+      </Card>
     </>
   );
 }

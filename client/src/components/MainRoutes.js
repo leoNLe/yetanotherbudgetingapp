@@ -7,7 +7,6 @@ import Login from "../pages/Login/";
 import Expenses from "../pages/Expense/";
 import NavigationBar from "../components/NavigationBar/";
 import Register from "../pages/Register/";
-import Home from "../pages/Home/";
 import { ADD_USER_INFO, REMOVE_USER } from "../utils/globalStates/actions";
 import { logoutAPI } from "../utils/API";
 

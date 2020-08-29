@@ -4,24 +4,24 @@ import { useAppContext } from "../../utils/globalStates/stateProvider";
 
 export const Balance = () => {
   const [state] = useAppContext();
-  const amounts = state.transactions.map(transaction => transaction.amount);
+  const amounts = state.transactions.map((transaction) => transaction.amount);
   const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
   const income = amounts
 
-    .filter(item => item > 0)
+    .filter((item) => item > 0)
     .reduce((acc, item) => (acc += item), 0)
     .toFixed(2);
 
   const expense = (
-    amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0) *
+    amounts.filter((item) => item < 0).reduce((acc, item) => (acc += item), 0) *
     -1
   ).toFixed(2);
 
   return (
-    <Card body className="text-center" >
+    <Card body className="text-center">
       <CardTitle>
-        <h4>Your Total Balance</h4>
-        <h1>${total}</h1>
+        <h5>Your Total Balance</h5>
+        <h3>${total}</h3>
       </CardTitle>
       <Row>
         <Col>

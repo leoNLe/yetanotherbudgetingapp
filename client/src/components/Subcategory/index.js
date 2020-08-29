@@ -20,7 +20,7 @@ function Subcategory(props) {
   // };
 
   return (
-    <div className="top-container  py-0 ml-5 shadow-sm   justify-self-center sub-cat-container">
+    <div className="top-container  py-0 ml-2 shadow-sm   justify-self-center sub-cat-container">
       <div className="sub-name ">
         <ChangeNamePopover currentName={props.name} />
       </div>

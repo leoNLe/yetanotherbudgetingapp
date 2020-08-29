@@ -73,9 +73,9 @@ function Budget() {
   };
 
   return (
-    <div className="page-container ">
+    <div className="page-container  ">
       <div className="sub-container">
-        <div className="align-items-center mx-5">
+        <div className="align-items-center mr-5">
           <Button onClick={toggle} className="btn-color shadow">
             Add Category Group
           </Button>
@@ -106,7 +106,7 @@ function Budget() {
 						*/}
       </div>
       <div className="top-container">
-        <div className="name-item "> Category Name </div>
+        <div className="column-name"> Category Name </div>
         <div className="column-name"> Budgeted </div>
         <div className="column-name"> Activity </div>
         <div className="column-name"> Available </div>
