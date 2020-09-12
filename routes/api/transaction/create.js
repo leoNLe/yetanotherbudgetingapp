@@ -66,7 +66,6 @@ router.route("/").post((req, res) => {
     dbXaction,
     dbModel,
     dbCategory,
-    perspective,
     query,
     originalAccountBalance;
 
@@ -85,20 +84,33 @@ router.route("/").post((req, res) => {
     response = { status: "ERROR", message: "Missing or invalid sessionUUID" };
   else if ((accountUUID = accountUUID.trim()).length == 0)
     response = { status: "ERROR", message: "Missing or invalid accountUUID" };
-  else if ((payee = payee.trim()).length == 0) response = { status: "ERROR", message: "Missing or invalid payee" };
+  else if ((payee = payee.trim()).length == 0)
+    response = { status: "ERROR", message: "Missing or invalid payee" };
   else if ((categoryUUID = categoryUUID.trim()).length == 0)
     response = { status: "ERROR", message: "Missing or invalid categoryUUID" };
   else if ((subCategoryUUID = subCategoryUUID.trim()).length == 0)
-    response = { status: "ERROR", message: "Missing or invalid subCategoryUUID" };
-  else if (isNaN(amount) == true) response = { status: "ERROR", message: "Missing or amount" };
+    response = {
+      status: "ERROR",
+      message: "Missing or invalid subCategoryUUID",
+    };
+  else if (isNaN(amount) == true)
+    response = { status: "ERROR", message: "Missing or amount" };
   else if ((memo = memo.trim()).length == 0) memo = undefined;
 
-  if (!date || isNaN(date) == true) date = Utilities.formatTransactionDateFromUTC();
-  else if ((date = parseInt(date)) < Constants.MIN_YYYYMMDD || date > Constants.MAX_YYYYMMDD)
+  if (!date || isNaN(date) == true)
+    date = Utilities.formatTransactionDateFromUTC();
+  else if (
+    (date = parseInt(date)) < Constants.MIN_YYYYMMDD ||
+    date > Constants.MAX_YYYYMMDD
+  )
     date = Utilities.formatTransactionDateFromUTC();
 
   amount = new Number(amount);
-  if (amount == 0) response = { status: "ERROR", message: "Transaction amount is zero (0.00)" };
+  if (amount == 0)
+    response = {
+      status: "ERROR",
+      message: "Transaction amount is zero (0.00)",
+    };
   if (response) {
     console.log("Create Transaction API Response:\n", response);
     res.json(response);
@@ -109,22 +121,35 @@ router.route("/").post((req, res) => {
   (async () => {
     try {
       dbResults = await db.UserProfile.find({ sessionUUID }).lean(); // use "lean" because we just want "_id"; no virtuals, etc
-      if (!dbResults || dbResults.length == 0) response = { status: "ERROR", message: "Invalid sessionUUID" };
+      if (!dbResults || dbResults.length == 0)
+        response = { status: "ERROR", message: "Invalid sessionUUID" };
       else {
         dbProfile = dbResults[0];
         ownerRef = dbProfile._id;
         // check if category and subCategory are valid
-        query = { _id: categoryUUID, "subCategory._id": subCategoryUUID, ownerRef: ownerRef };
+        query = {
+          _id: categoryUUID,
+          "subCategory._id": subCategoryUUID,
+          ownerRef: ownerRef,
+        };
         dbCategory = await db.UserCategoryGroup.findOne(query);
         console.log("\n\nCategory:\n", dbCategory);
-        if (!dbCategory) response = { status: "ERROR", message: "Unable to find Category/SubCategory" };
+        if (!dbCategory)
+          response = {
+            status: "ERROR",
+            message: "Unable to find Category/SubCategory",
+          };
         else {
           // make sure the amount is the right sign base on the perspective of the Category
-          perspective = dbCategory.perspective;
-          amount = perspective == "Inflow" ? Utilities.makePositive(amount) : Utilities.makeNegative(amount);
+          // perspective = dbCategory.perspective;
+          //amount = perspective == "Inflow" ? Utilities.makePositive(amount) : Utilities.makeNegative(amount);
           // make sure budget account is valid
           dbAccount = await db.BudgetAccount.findById(accountUUID);
-          if (!dbAccount) response = { status: "ERROR", message: "Unable to find Budget Account" };
+          if (!dbAccount)
+            response = {
+              status: "ERROR",
+              message: "Unable to find Budget Account",
+            };
           else {
             dbModel = {
               payee: payee,
@@ -144,13 +169,20 @@ router.route("/").post((req, res) => {
             //accountBalance = dbAccount.balance + amount;
             dbAccount.balance = dbAccount.balance + amount;
 
-            console.log(`"originalAccountBalance" ==> ${originalAccountBalance}`);
+            console.log(
+              `"originalAccountBalance" ==> ${originalAccountBalance}`
+            );
             console.log(`"accountBalance" ==> ${dbAccount.balance}`);
             dbAccount = await dbAccount.save();
             console.log(`\n\nAfter Account save:`);
             console.log(`Account Balance: ${dbAccount.balance}`);
             // update budget
-             let dbBudget = await Utils.updateBudgetWithTransaction(dbXaction, null, dbCategory, subCategoryUUID);
+            let dbBudget = await Utils.updateBudgetWithTransaction(
+              dbXaction,
+              null,
+              dbCategory,
+              subCategoryUUID
+            );
 
             let transactionJSON = TransactionController.getJSON(dbXaction);
             let accountJSON = AccountController.getJSON(dbAccount);
@@ -173,6 +205,5 @@ router.route("/").post((req, res) => {
     res.json(response);
   })();
 });
-
 
 module.exports = router;

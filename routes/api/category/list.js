@@ -53,14 +53,19 @@ router.route("/").post((req, res) => {
   console.log(Utilities.getFullUrl(req));
   console.log(req.body);
   let { sessionUUID = "", categoryName = "", categoryUUID = "" } = req.body;
-  let categoryName4Compare, response, dbResults, dbProfile, perspective;
+  let categoryName4Compare, response, dbResults, dbProfile;
 
   if (!sessionUUID || (sessionUUID = sessionUUID.trim()).length == 0)
     response = { status: "ERROR", message: "Missing or invalid sessionUUID" };
   else {
-    if ((categoryName4Compare = Utilities.multipleSpaceRemovedTrimLC(categoryName)).length == 0)
+    if (
+      (categoryName4Compare = Utilities.multipleSpaceRemovedTrimLC(
+        categoryName
+      )).length == 0
+    )
       categoryName4Compare = undefined;
-    if ((categoryUUID = categoryUUID.trim()).length == 0) categoryUUID = undefined;
+    if ((categoryUUID = categoryUUID.trim()).length == 0)
+      categoryUUID = undefined;
   }
   if (response) {
     console.log(`\nResponse for ${Utilities.getFullUrl(req)}:\n`, response);
@@ -72,20 +77,25 @@ router.route("/").post((req, res) => {
     try {
       dbProfile = await db.UserProfile.findOne({ sessionUUID: sessionUUID });
       if (!dbProfile) throw new Error("Invalid sessionUUID");
-      if (dbProfile.isVerified != true) throw new Error("Account is not verified");
+      if (dbProfile.isVerified != true)
+        throw new Error("Account is not verified");
       let ownerRef = dbProfile._id;
       let query = { ownerRef: ownerRef };
       if (categoryUUID) query["_id"] = categoryUUID;
-      if (categoryName4Compare) query["categoryName4Compare"] = categoryName4Compare;
+      if (categoryName4Compare)
+        query["categoryName4Compare"] = categoryName4Compare;
       console.log(query);
       dbResults = await db.UserCategoryGroup.find(query);
       if (!dbResults) throw new Error("No Category found");
-      response = { status: "OK", message: `Found ${dbResults.length} Categories` };
+      response = {
+        status: "OK",
+        message: `Found ${dbResults.length} Categories`,
+      };
       let categories = [];
       dbResults.every((dbCategory) => {
         categoryName = dbCategory.categoryName;
         categoryUUID = dbCategory._id;
-        perspective = dbCategory.perspective;
+        //perspective = dbCategory.perspective;
         let subCategories = [];
         if (dbCategory.subCategory) {
           dbCategory.subCategory.every((dbSubCategory) => {
@@ -99,7 +109,7 @@ router.route("/").post((req, res) => {
         categories.push({
           categoryName: categoryName,
           categoryUUID: categoryUUID,
-          perspective: perspective,
+          //perspective: perspective,
           subCategory: subCategories,
         });
         return true;
@@ -109,7 +119,10 @@ router.route("/").post((req, res) => {
       console.log(error);
       response = { status: "ERROR", message: error.message };
     }
-    console.log(`\nResponse for ${Utilities.getFullUrl(req)}:\n`, JSON.stringify(response, null, 2));
+    console.log(
+      `\nResponse for ${Utilities.getFullUrl(req)}:\n`,
+      JSON.stringify(response, null, 2)
+    );
     res.json(response);
   })();
 });

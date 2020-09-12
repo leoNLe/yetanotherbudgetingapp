@@ -21,16 +21,10 @@
  */
 
 const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const exphbs = require("express-handlebars");
 require("dotenv").config();
 const path = require("path");
 
-const Constants = require("./constants");
 const routes = require("./routes");
-const db = require("./models");
-const Utilities = require("./utilities");
 
 //const routes = require("./routes");
 const app = express();

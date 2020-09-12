@@ -69,7 +69,11 @@ router.route("/").post((req, res) => {
     response = { status: "ERROR", message: "Missing or invalid sessionUUID" };
   else if (!categoryUUID || (categoryUUID = categoryUUID.trim()).length == 0)
     response = { status: "ERROR", message: "Missing or invalid categoryUUID" };
-  else if (!subCategory || !Array.isArray(subCategory) || subCategory.length == 0)
+  else if (
+    !subCategory ||
+    !Array.isArray(subCategory) ||
+    subCategory.length == 0
+  )
     response = { status: "ERROR", message: "Missing or invalid subCategory" };
 
   if (response) {
@@ -80,10 +84,17 @@ router.route("/").post((req, res) => {
 
   (async () => {
     try {
-      if (!(dbProfile = await db.UserProfile.findOne({ sessionUUID: sessionUUID }))) throw new Error("Invalid SessionUUID");
+      if (
+        !(dbProfile = await db.UserProfile.findOne({
+          sessionUUID: sessionUUID,
+        }))
+      )
+        throw new Error("Invalid SessionUUID");
       let ownerRef = dbProfile._id;
 
-      let subCategoryNames = Utilities.removeDuplicateInArrayTrimLC(subCategory);
+      let subCategoryNames = Utilities.removeDuplicateInArrayTrimLC(
+        subCategory
+      );
       console.log("\n\nSubCategoryNames:\n", subCategoryNames, "\n\n");
       // get Category
       dbCategory = await db.UserCategoryGroup.findById(categoryUUID);
@@ -92,41 +103,54 @@ router.route("/").post((req, res) => {
       for (let index = 0; index < subCategoryNames.length; index++) {
         let subCategoryName = subCategoryNames[index];
         name4compare = Utilities.multipleSpaceRemovedTrimLC(subCategoryName);
-        console.log(`\nInput subCategory Name: ${subCategoryName}\tName4Compare: ${name4compare}`);
+        console.log(
+          `\nInput subCategory Name: ${subCategoryName}\tName4Compare: ${name4compare}`
+        );
         let found = false;
         for (let count = 0; count < dbCategory.subCategory.length; count++) {
           let dbSub = dbCategory.subCategory[count];
           console.log(
-            `dbSubCategory Name: ${dbSub.subCategoryName}\tName4Compare: ${Utilities.multipleSpaceRemovedTrimLC(
+            `dbSubCategory Name: ${
+              dbSub.subCategoryName
+            }\tName4Compare: ${Utilities.multipleSpaceRemovedTrimLC(
               dbSub.subCategoryName
             )}`
           );
-          if (name4compare == Utilities.multipleSpaceRemovedTrimLC(dbSub.subCategoryName)) {
+          if (
+            name4compare ==
+            Utilities.multipleSpaceRemovedTrimLC(dbSub.subCategoryName)
+          ) {
             found = true;
             break;
           }
         }
         if (found == false) uniqueSubCategoryNames.push(subCategoryName);
       }
-      if (uniqueSubCategoryNames.length == 0) throw new Error("No Sub Category added");
+      if (uniqueSubCategoryNames.length == 0)
+        throw new Error("No Sub Category added");
 
       console.log("\n\nUnique Names:\n", uniqueSubCategoryNames);
 
       for (let index = 0; index < uniqueSubCategoryNames.length; index++)
-        dbCategory.subCategory.push({ subCategoryName: uniqueSubCategoryNames[index] });
+        dbCategory.subCategory.push({
+          subCategoryName: uniqueSubCategoryNames[index],
+        });
       await dbCategory.save();
       let subResp = [];
       console.log("\n\nSaved Category:\n", JSON.stringify(dbCategory, null, 2));
       for (let index = 0; index < dbCategory.subCategory.length; index++) {
         let dbSub = dbCategory.subCategory[index];
-        subResp.push({ subCategoryName: dbSub.subCategoryName, subCategoryUUID: dbSub._id });
+        subResp.push({
+          subCategoryName: dbSub.subCategoryName,
+          subCategoryUUID: dbSub._id,
+        });
       }
       response = {
         status: "OK",
         message: `Added ${uniqueSubCategoryNames.length} Sub Categories to ${dbCategory.categoryName}`,
         categoryName: dbCategory.categoryName,
         categoryUUID: categoryUUID,
-        perspective: dbCategory.perspective,
+        //perspective: dbCategory.perspective,
         subCategory: subResp,
       };
     } catch (error) {

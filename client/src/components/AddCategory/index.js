@@ -17,13 +17,13 @@ const flowKeys = {
 
 function AddCategoryModal(props) {
   const [newName, setNewName] = useState("");
-  const [perspective, setPerspective] = useState("Inflow");
+  //  const [perspective, setPerspective] = useState("Inflow");
 
-  const handleSelect = (e) => setPerspective(e.target.value);
+  //const handleSelect = (e) => setPerspective(e.target.value);
   const handleSubmit = (event) => {
     event.preventDefault();
     props.toggle();
-    props.addCategory(newName, perspective);
+    props.addCategory(newName);
     cleanUp();
   };
   const cleanUp = () => {
@@ -46,18 +46,20 @@ function AddCategoryModal(props) {
               value={newName}
               className="my-3"
             />
-            <FormGroup>
-              <Label for="exampleSelectMulti">Select Type</Label>
-              <Input
-                onChange={handleSelect}
-                type="select"
-                name="select"
-                id="exampleSelectMulti"
-              >
-                <option>Inflow</option>
-                <option>Outflow</option>
-              </Input>
-            </FormGroup>
+            {
+              // <FormGroup>
+              //   <Label for="exampleSelectMulti">Select Type</Label>
+              //   <Input
+              //     onChange={handleSelect}
+              //     type="select"
+              //     name="select"
+              //     id="exampleSelectMulti"
+              //   >
+              //     <option>Inflow</option>
+              //     <option>Outflow</option>
+              //   </Input>
+              // </FormGroup>
+            }
           </FormGroup>
           <Button className="mr-3" type="submit">
             Add Category Group

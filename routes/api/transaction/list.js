@@ -53,7 +53,14 @@ const TransactionController = require("../../../controllers/transactionControlle
 router.route("/").post((req, res) => {
   console.log(Utilities.getFullUrl(req));
   console.log(req.body);
-  let response, dbProfile, ownerRef, dbAccount, dbResults, query, perspective, xactionJSON, categoryUUID;
+  let response,
+    dbProfile,
+    ownerRef,
+    dbAccount,
+    dbResults,
+    query,
+    xactionJSON,
+    categoryUUID;
 
   let { sessionUUID = "", accountUUID = "", filter } = req.body;
   let { limit, startDate, endDate, sort } = filter;
@@ -69,7 +76,8 @@ router.route("/").post((req, res) => {
     return;
   }
 
-  if (!limit || isNaN(limit) == true || (limit = parseInt(limit)) < 1) limit = 1024;
+  if (!limit || isNaN(limit) == true || (limit = parseInt(limit)) < 1)
+    limit = 1024;
   if (
     !startDate ||
     isNaN(startDate) == true ||
@@ -78,7 +86,11 @@ router.route("/").post((req, res) => {
   )
     startDate = Constants.MIN_YYYYMMDD;
 
-  if (!endDate || isNaN(endDate) == true || (endDate = parseInt(endDate)) > Constants.MAX_YYYYMMDD)
+  if (
+    !endDate ||
+    isNaN(endDate) == true ||
+    (endDate = parseInt(endDate)) > Constants.MAX_YYYYMMDD
+  )
     endDate = Constants.MAX_YYYYMMDD;
 
   if (!sort || isNaN(sort) == true) sort = -1;
@@ -89,7 +101,8 @@ router.route("/").post((req, res) => {
   (async () => {
     try {
       dbResults = await db.UserProfile.find({ sessionUUID }).lean(); // use "lean" because we just want "_id"; no virtuals, etc
-      if (!dbResults || dbResults.length == 0) throw new Error("Invalid sessionUUID");
+      if (!dbResults || dbResults.length == 0)
+        throw new Error("Invalid sessionUUID");
       dbProfile = dbResults[0];
       ownerRef = dbProfile._id;
       // make sure budget account is valid
@@ -103,18 +116,25 @@ router.route("/").post((req, res) => {
           { date: { $lte: endDate } },
         ],
       };
-      dbResults = await db.Transaction.find(query).populate("categoryRef").limit(limit).sort({ date: sort });
+      dbResults = await db.Transaction.find(query)
+        .populate("categoryRef")
+        .limit(limit)
+        .sort({ date: sort });
       if (!dbResults) throw new Error("Error retreiving data");
       let transactions = [];
       dbResults.every((result) => {
         let transactionUUID = result._id;
         let { payee, memo, amount, date } = result;
-        perspective = result.categoryRef.perspective;
+        //perspective = result.categoryRef.perspective;
         categoryUUID = result.categoryRef._id;
         categoryName = result.categoryRef.categoryName;
         let subCategoryUUID = result.subCategoryRef;
         let subCategoryName;
-        for (let index = 0; index < result.categoryRef.subCategory.length; index++) {
+        for (
+          let index = 0;
+          index < result.categoryRef.subCategory.length;
+          index++
+        ) {
           let dbSubCategory = result.categoryRef.subCategory[index];
           if (dbSubCategory._id == subCategoryUUID) {
             subCategoryName = dbSubCategory.subCategoryName;

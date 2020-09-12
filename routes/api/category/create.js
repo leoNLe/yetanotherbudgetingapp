@@ -61,21 +61,29 @@ const Constants = require("../../../constants");
 router.route("/").post((req, res) => {
   console.log(Utilities.getFullUrl(req));
   console.log(req.body);
-  let { sessionUUID = "", categoryName = "", perspective = "", subCategory = [] } = req.body;
-  console.log(sessionUUID, categoryName, perspective, subCategory);
+  let { sessionUUID = "", categoryName = "", subCategory = [] } = req.body;
+  console.log(sessionUUID, categoryName, subCategory);
 
   let response, dbResults, dbProfile, dbCategory, dbSubScategory;
 
   if (!sessionUUID || (sessionUUID = sessionUUID.trim()).length == 0)
     response = { status: "ERROR", message: "Missing or invalid sessionUUID" };
-  else if (!categoryName || (categoryName = Utilities.multipleSpaceRemovedTrim(categoryName)).length == 0)
+  else if (
+    !categoryName ||
+    (categoryName = Utilities.multipleSpaceRemovedTrim(categoryName)).length ==
+      0
+  )
     response = { status: "ERROR", message: "Missing or invalid Category Name" };
-  else if (!perspective || (perspective = Utilities.multipleSpaceRemovedTrim(perspective)).length == 0)
-    response = { status: "ERROR", message: "Missing or invalid Perspective" };
+  // else if (
+  //   !perspective ||
+  //   (perspective = Utilities.multipleSpaceRemovedTrim(perspective)).length == 0
+  // )
+  //   response = { status: "ERROR", message: "Missing or invalid Perspective" };
   // make sure perspective is one of the valid values, case insensitive
-  else if (!(perspective = checkPerspective(perspective)))
-    response = { status: "ERROR", message: "Invalid Perspective" };
-  else if (!Array.isArray(subCategory)) response = { status: "ERROR", message: "Invalid SubCategory" };
+  //  else if (!(perspective = checkPerspective(perspective)))
+  //    response = { status: "ERROR", message: "Invalid Perspective" };
+  else if (!Array.isArray(subCategory))
+    response = { status: "ERROR", message: "Invalid SubCategory" };
   else if (Utilities.findDuplicateInArrayTrimLC(subCategory))
     response = { status: "ERROR", message: "Duplicates in SubCategory" };
 
@@ -87,26 +95,41 @@ router.route("/").post((req, res) => {
 
   (async () => {
     try {
-      if (!(dbProfile = await db.UserProfile.findOne({ sessionUUID: sessionUUID }))) throw new Error("Invalid SessionUUID");
+      if (
+        !(dbProfile = await db.UserProfile.findOne({
+          sessionUUID: sessionUUID,
+        }))
+      )
+        throw new Error("Invalid SessionUUID");
 
       let ownerRef = dbProfile._id;
       // check to see if there is a Category beloing to the user that has the "same" name
-      let categoryName4Compare = Utilities.multipleSpaceRemovedTrimLC(categoryName);
-      dbResults = await db.UserCategoryGroup.find({ ownerRef: ownerRef, categoryName4Compare: categoryName4Compare });
+      let categoryName4Compare = Utilities.multipleSpaceRemovedTrimLC(
+        categoryName
+      );
+      dbResults = await db.UserCategoryGroup.find({
+        ownerRef: ownerRef,
+        categoryName4Compare: categoryName4Compare,
+      });
       if (dbResults && dbResults.length != 0)
-        response = { status: "ERROR", message: `A Category Exists with name (${categoryName})` };
+        response = {
+          status: "ERROR",
+          message: `A Category Exists with name (${categoryName})`,
+        };
       else {
         // create Category. First make subCategory
         let subCat = [];
         subCategory.every((sub) => {
-          subCat.push({ subCategoryName: Utilities.multipleSpaceRemovedTrim(sub) });
+          subCat.push({
+            subCategoryName: Utilities.multipleSpaceRemovedTrim(sub),
+          });
           return true;
         });
         let dbModel = {
           ownerRef: ownerRef,
           categoryName: categoryName,
           categoryName4Compare: categoryName4Compare,
-          perspective: perspective,
+          //perspective: perspective,
           subCategory: subCat,
         };
 
@@ -115,19 +138,25 @@ router.route("/").post((req, res) => {
         dbCategory = await db.UserCategoryGroup.create(dbModel);
         console.log("\n\nSaved Category:\n", dbCategory);
         if (!dbCategory) {
-          response = { status: "ERROR", message: `Unable to create Category: (${categoryName})` };
+          response = {
+            status: "ERROR",
+            message: `Unable to create Category: (${categoryName})`,
+          };
         } else {
           // make response
           subCat = [];
           for (let index = 0; index < dbCategory.subCategory.length; index++) {
             dbSubScategory = dbCategory.subCategory[index];
-            subCat.push({ subCategoryName: dbSubScategory.subCategoryName, subCategoryUUID: dbSubScategory._id });
+            subCat.push({
+              subCategoryName: dbSubScategory.subCategoryName,
+              subCategoryUUID: dbSubScategory._id,
+            });
           }
           response = {
             status: "OK",
             message: `Category with ${dbCategory.subCategory.length} Sub Categories created`,
             categoryName: dbCategory.categoryName,
-            perspective: dbCategory.perspective,
+            //perspective: dbCategory.perspective,
             categoryUUID: dbCategory._id,
             subCategory: subCat,
           };
@@ -142,13 +171,13 @@ router.route("/").post((req, res) => {
   })();
 });
 
-function checkPerspective(perspective) {
-  let retval;
-  let perspectiveLC = perspective.toLowerCase();
-  let index = Constants.ACCOUNT_PERSPECTIVES.findIndex((ele) => {
-    return Utilities.multipleSpaceRemovedTrimLC(ele) === perspectiveLC;
-  });
-  if (index != -1) retval = Constants.ACCOUNT_PERSPECTIVES[index];
-  return retval;
-}
+//function checkPerspective(perspective) {
+//  let retval;
+//  let perspectiveLC = perspective.toLowerCase();
+//  let index = Constants.ACCOUNT_PERSPECTIVES.findIndex((ele) => {
+//    return Utilities.multipleSpaceRemovedTrimLC(ele) === perspectiveLC;
+//  });
+//  if (index != -1) retval = Constants.ACCOUNT_PERSPECTIVES[index];
+//  return retval;
+//}
 module.exports = router;

@@ -32,9 +32,15 @@ module.exports = Object.freeze({
   CASH_TYPE: 2,
   CREDIT_CARD_TYPE: 3,
   LOC_TYPE: 4,
-  ACCOUNT_TYPES: ["Checking", "Saving", "Cash", "Credit Card", "Line of Credit"],
-  ACCOUNT_PERSPECTIVES: ["Outflow", "Inflow"],
-  DEFAULT_PERSPECTIVE: "Outflow",
+  ACCOUNT_TYPES: [
+    "Checking",
+    "Saving",
+    "Cash",
+    "Credit Card",
+    "Line of Credit",
+  ],
+  //  ACCOUNT_PERSPECTIVES: ["Outflow", "Inflow"],
+  // DEFAULT_PERSPECTIVE: "Outflow",
   // https://girltalkwithfo.com/budget-categories/
   ACCOUNT_ACCESS_DEFAULT: "User",
   ACCOUNT_ACCESS_SPECIAL: "System",
@@ -50,17 +56,23 @@ module.exports = Object.freeze({
     {
       groupName: "Inflow Adjustment",
       categories: ["To be budgeted"],
-      perspective: "Inflow",
       access: "System",
     },
     {
       groupName: "Outflow Adjustment",
       categories: ["To be budgeted"],
-      perspective: "Outflow",
       access: "System",
     },
-    { groupName: "Account Inflow", categories: ["Transfer"], perspective: "Inflow", access: "System" },
-    { groupName: "Account Outflow", categories: ["Transfer"], perspective: "Outflow", access: "System" },
+    {
+      groupName: "Account Inflow",
+      categories: ["Transfer"],
+      access: "System",
+    },
+    {
+      groupName: "Account Outflow",
+      categories: ["Transfer"],
+      access: "System",
+    },
   ],
   GENERIC_BUDGET_CATEGORIES: [
     {
@@ -74,7 +86,6 @@ module.exports = Object.freeze({
         "Interest",
         "Refund",
       ],
-      perspective: "Inflow",
     },
     {
       groupName: "Utilities",
@@ -136,7 +147,13 @@ module.exports = Object.freeze({
     },
     {
       groupName: "Recreation/Fun",
-      categories: ["Entertainment", "Subscriptions", "Sporting Events", "Concerts", "Hobbies"],
+      categories: [
+        "Entertainment",
+        "Subscriptions",
+        "Sporting Events",
+        "Concerts",
+        "Hobbies",
+      ],
     },
     {
       groupName: "Debt Payments",
@@ -144,7 +161,14 @@ module.exports = Object.freeze({
     },
     {
       groupName: "Medical/Health",
-      categories: ["Medications", "Doctor Bills", "Dentist", "Optometrist", "Vitamins", "Gym Membership"],
+      categories: [
+        "Medications",
+        "Doctor Bills",
+        "Dentist",
+        "Optometrist",
+        "Vitamins",
+        "Gym Membership",
+      ],
     },
     {
       groupName: "Insurance",
@@ -190,7 +214,11 @@ module.exports = Object.freeze({
     { name: "Belize Dollar", _id: "BZD", uniDec: "&#66;&#90;&#36;" },
     { name: "Bermuda Dollar", _id: "BMD", uniDec: "&#36;" },
     { name: "Bolivia Bolíviano", _id: "BOB", uniDec: "&#36;&#98;" },
-    { name: "Bosnia and Herzegovina Convertible Mark", _id: "BAM", uniDec: "&#75;&#77;" },
+    {
+      name: "Bosnia and Herzegovina Convertible Mark",
+      _id: "BAM",
+      uniDec: "&#75;&#77;",
+    },
     { name: "Botswana Pula", _id: "BWP", uniDec: "&#80;" },
     { name: "Bulgaria Lev", _id: "BGN", uniDec: "&#1083;&#1074;" },
     { name: "Brazil Real", _id: "BRL", uniDec: "&#82;&#36;" },
@@ -275,7 +303,11 @@ module.exports = Object.freeze({
     { name: "Syria Pound", _id: "SYP", uniDec: "&#163;" },
     { name: "Taiwan New Dollar", _id: "TWD", uniDec: "&#78;&#84;&#36;" },
     { name: "Thailand Baht", _id: "THB", uniDec: "&#3647;" },
-    { name: "Trinidad and Tobago Dollar", _id: "TTD", uniDec: "&#84;&#84;&#36;" },
+    {
+      name: "Trinidad and Tobago Dollar",
+      _id: "TTD",
+      uniDec: "&#84;&#84;&#36;",
+    },
     { name: "Turkey Lira", _id: "TRY", uniDec: "&#8378;" },
     { name: "Tuvalu Dollar", _id: "TVD", uniDec: "&#36;" },
     { name: "Ukraine Hryvnia", _id: "UAH", uniDec: "&#8372;" },

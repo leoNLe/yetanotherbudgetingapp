@@ -21,12 +21,7 @@ function Category(props) {
 
   const subcategories = props.subCategory.map(
     ({ subCategoryName, budgeted, activity, subCategoryUUID }) => {
-      let available = 0;
-      if (props.perspective === "Inflow") {
-        available = budgeted + activity;
-      } else {
-        available = budgeted - activity;
-      }
+      let available = budgeted + activity;
       tempbudgeted += budgeted;
       tempActivity += activity;
       return (
@@ -110,7 +105,7 @@ function Category(props) {
         <div className="justify-self-center text-wrap"> $ {budgetedTotal} </div>
         <div className="justify-self-center text-wrap"> $ {activityTotal} </div>
         <div className="justify-self-center text-wrap">
-          $ {budgetedTotal - activityTotal}
+          $ {budgetedTotal + activityTotal}
         </div>
       </div>
 

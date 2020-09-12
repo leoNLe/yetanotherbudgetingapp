@@ -46,13 +46,13 @@ const UserCategoryGroupSchema = new Schema({
   categoryName: { type: Schema.Types.String, required: true },
   categoryName4Compare: { type: Schema.Types.String, required: true },
   subCategory: [SubCategorySchema],
-  perspective: {
-    // defines if transaction is INFLOW or OUTFLOW type
-    type: Schema.Types.String,
-    required: true,
-    enum: Constants.ACCOUNT_PERSPECTIVES,
-    default: Constants.DEFAULT_PERSPECTIVE,
-  },
+  //  perspective: {
+  //    // defines if transaction is INFLOW or OUTFLOW type
+  //    type: Schema.Types.String,
+  //    required: true,
+  //    enum: Constants.ACCOUNT_PERSPECTIVES,
+  //    default: Constants.DEFAULT_PERSPECTIVE,
+  //  },
   access: {
     type: Schema.Types.String,
     enum: Constants.ACCOUNT_ACCESS_LEVELS,
@@ -73,7 +73,9 @@ UserCategoryGroupSchema.methods.getSubCategoryCount = function () {
 UserCategoryGroupSchema.methods.getSubCategoryIdNameMap = function () {
   let retval = {};
   for (let index = 0; index < this.subCategory.length; index++) {
-    retval[this.subCategory[index]._id] = this.subCategory[index].subCategoryName;
+    retval[this.subCategory[index]._id] = this.subCategory[
+      index
+    ].subCategoryName;
   }
   return retval;
 };
@@ -84,12 +86,16 @@ UserCategoryGroupSchema.methods.getSubCategoryIdNameMap = function () {
 UserCategoryGroupSchema.methods.getSubCategoryById = function (subId) {
   if (subId) {
     for (let index = 0; index < this.subCategory.length; index++) {
-      if ([this.subCategory[index]._id] == subId) return this.subCategory[index];
+      if ([this.subCategory[index]._id] == subId)
+        return this.subCategory[index];
     }
   }
   return;
 };
 
-const UserCategoryGroup = mongoose.model("UserCategoryGroup", UserCategoryGroupSchema);
+const UserCategoryGroup = mongoose.model(
+  "UserCategoryGroup",
+  UserCategoryGroupSchema
+);
 
 module.exports = UserCategoryGroup;
