@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Row, Col, CardTitle, Card, CardText } from "reactstrap";
 import { useAppContext } from "../../utils/globalStates/stateProvider";
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ArrowRight from "../../icons/ArrowRight";
 import ArrowLeft from "../../icons/ArrowLeft";
-import { useParams } from "react-router";
 import { yearMonthToString } from "../../utils/dateformat";
 
 function MonthSelector(props) {
@@ -52,9 +51,7 @@ function MonthSelector(props) {
     </div>
   );
 }
-const toString = (year, month) => {
-  return month < 10 ? `${year}0${month}` : `${year}${month}`;
-};
+
 const monthToString = (num) => {
   switch (num) {
     case 1:

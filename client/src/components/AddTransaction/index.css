@@ -1,0 +1,30 @@
+.form-div {
+	margin: 1rem 0;
+	padding: .2rem;
+	background-color: white;
+	border-radius: 10px;
+}
+.add-transaction-grid {
+	margin: .5rem 0;
+	display:grid;
+	
+}
+.cancel-btn {
+	margin-right: 1rem;
+}
+
+.add-transaction-div {
+	display: flex;
+	justify-content: center;
+}
+
+@media only screen and (min-width: 980px) {
+	.add-transaction-grid{
+		grid-template-columns: minmax(25px, 1fr) 2fr 2fr 1fr;
+	}
+	.add-transaction-div {
+		display: flex;
+		justify-content: flex-end;
+		margin-right: 2rem;
+	}
+}

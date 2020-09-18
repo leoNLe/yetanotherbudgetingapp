@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Balance } from "../../components/Balance";
-import TransactionList from "../../components/TList";
+import TransactionList from "../../components/TransactionList/";
 
 function Expense() {
   return (

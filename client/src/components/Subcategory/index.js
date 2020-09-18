@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import CurrencyInput from "../CurrentcyInput";
-import Transferpopover from "../../components/TrasnferPopover";
+//import Transferpopover from "../../components/TrasnferPopover";
+
 import Categorycontext from "../../utils/CategoriesContext";
 import ChangeNamePopover from "../ChangeNamePopover/";
 import "./index.css";

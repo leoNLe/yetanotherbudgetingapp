@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { Button, Navbar, NavbarBrand, NavItem } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../utils/globalStates/stateProvider";
-import Coin from "../../icons/Coin";
 import "./index.css";
 
 const Navigation = (props) => {

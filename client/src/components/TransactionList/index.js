@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import TempAdd from "../TempAdd/";
-import { Table, Card, Button } from "reactstrap";
+import AddTransaction from "../AddTransaction/";
+import { Button } from "reactstrap";
 import { getTransAPI } from "../../utils/TransactionAPI";
 import { useAppContext } from "../../utils/globalStates/stateProvider";
 import { ADD_TRANSACTION } from "../../utils/globalStates/actions";
@@ -55,7 +55,7 @@ export default function TransactionList(props) {
         </div>
       </div>
       {showAdd ? (
-        <TempAdd
+        <AddTransaction
           setShowAdd={() => setShowAdd(!showAdd)}
           setNewList={() => setNewList(!newList)}
         />

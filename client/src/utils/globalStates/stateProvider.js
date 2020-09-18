@@ -9,7 +9,6 @@ import {
   GET_BALANCE,
 } from "./actions";
 
-const accountUUID = "63a9b997-d793-429e-bb93-eb57ae5ade9c";
 const AppContext = createContext({});
 const { Provider } = AppContext;
 
